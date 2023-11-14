@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import connectionBD from "../db.js";
 
+
 const User = connectionBD.define(
   "User",
   {
@@ -21,8 +22,9 @@ const User = connectionBD.define(
   },
   {
     tableName: "User",
-    timestamps: true,
+    timestamps: false,
   }
 );
+
 
 export default User;
