@@ -6,6 +6,10 @@ export const register = async (req, res) => {
 
     try {
         const { username, email, password } = req.body;
+
+        const userFound = await User.findAll({ where: { email } });
+        if (userFound[0]) return res.status(400).json(['the email is already in use'])
+
         const passwordHash = await bcrypt.hash(password, 10);
 
         const NewUser = await User.create({
@@ -69,6 +73,6 @@ export const profile = async (req, res) => {
             User: userFound,
         });
     } catch (err) {
-        res.json({success:false, messageError:"Error al obtener perfil"})
+        res.json({ success: false, messageError: "Error al obtener perfil" })
     }
 } 
