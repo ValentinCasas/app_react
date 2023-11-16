@@ -1,20 +1,24 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/authContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react"
 
 function LoginPage() {
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
 
-    const { signin, errors: signinErrors } = useAuth();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { signin, logout, isAuthenticated, errors: signinErrors } = useAuth();
+    const navigate = useNavigate();
 
     const onSubmit = handleSubmit((data) => {
         signin(data)
     })
+
+    /* useEffect esta siempre atento a isAuthenticates
+    entonces si me logueo me redirige a /tasks */
+    useEffect(() => {
+        if (isAuthenticated) navigate("/tasks")
+    }, [isAuthenticated])
 
 
 
@@ -25,16 +29,16 @@ function LoginPage() {
             <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
 
                 {
-                    signinErrors.map((error, i) => {
+                    signinErrors.map((error, i) => (
                         <div className="bg-red-500 p-2 text-white text-center"
                             key={i}>
                             {error}
                         </div>
-                    })
+                    ))
                 }
                 <h1 className="text-2xl font-bold">Login</h1>
 
-                <form onSubmit={onSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
 
 
                     <input type="email" {...register("email", { required: true })}
@@ -57,6 +61,12 @@ function LoginPage() {
 
                 <p className="flex gap-x-2 justify-between">
                     <Link to="/register" className="text-sky-500"> Sign up </Link>
+                </p>
+
+                <p className="flex gap-x-2 justify-between">
+                    <Link to="/" onClick={() => logout()}>
+                        Logout
+                    </Link>
                 </p>
 
             </div>

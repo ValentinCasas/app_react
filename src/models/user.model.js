@@ -9,6 +9,7 @@ const User = connectionBD.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
+      unique: true,
     },
     username: {
       type: DataTypes.STRING,

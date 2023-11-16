@@ -3,58 +3,81 @@ import User from "../models/user.model.js";
 
 /* todas las tareas de un user */
 export const getTasks = async (req, res) => {
+    try {
+        const tasks = await Task.findAll({
+            where: { userId: req.user.id },
+            include: User
+        });
 
-    const Tasks = await Task.findAll({
-        where: { userId: req.user.id },
-        include: User
-    });
-
-    res.json(Tasks)
+        res.json(tasks);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 
 export const createTask = async (req, res) => {
     const { title, description } = req.body;
-    const date = Date.now();
-
-    const newTask = new Task({
-        title,
-        description,
-        userId: req.user.id,
-        date
-    });
 
     try {
-        const savedTask = await newTask.save();
-        res.json(savedTask);
+        const newTask = await Task.create({
+            title: title,
+            description: description,
+            userId: req.user.id,
+            date: new Date()
+        });
+
+        res.status(201).json(newTask);
     } catch (err) {
-        res.status(500).send('Error al guardar la tarea');
+        res.status(500).send(err.message);
     }
-}
+};
 
 
 export const getTask = async (req, res) => {
-    const Task = await Task.findById(req.params.id);
-    if (!Task) return res.status(404).json({ error: "Task not found" });
-    res.json(Task);
+    try {
+        const task = await Task.findByPk(req.params.id);
+
+        if (!task) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+
+        res.json(task);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 export const updateTask = async (req, res) => {
-    const task = await Task.findByPk(req.params.id);
-    if (!task) {
-        return res.status(404).json({ message: 'Task not found' });
+    try {
+        const task = await Task.findByPk(req.params.id);
+
+        if (!task) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+
+        const updatedTask = await task.update(req.body);
+        res.json(updatedTask);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
-    const updatedTask = await task.update(req.body);
-    res.json(updatedTask);
 }
 
 export const deleteTask = async (req, res) => {
+    try {
+        const task = await Task.findByPk(req.params.id);
 
-    const task = await Task.findByPk(req.params.id);
-    if (!task) {
-        return res.status(404).json({ message: 'Task not found' });
+        if (!task) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+
+        await task.destroy();
+        res.sendStatus(204);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-    await task.destroy();
-
-    res.json({ message: 'Task deleted successfully' });
 }

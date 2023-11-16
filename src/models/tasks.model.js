@@ -9,6 +9,7 @@ const Task = connectionBD.define(
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
+            unique: true,
         },
         title: {
             type: DataTypes.STRING,
