@@ -18,7 +18,7 @@ function App() {
         <BrowserRouter>
 
 
-          <main className="container mx-auto px-10">
+          <main >
             <NavBar />
 
             <Routes>
