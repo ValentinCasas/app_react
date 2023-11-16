@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 
 const connectionBD = new Sequelize(
-  "aprendiendo_vue_dev",
+  "aprendiendo_react_dev",
   "root",
   "",
   {
