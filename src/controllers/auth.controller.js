@@ -54,7 +54,7 @@ export const login = async (req, res) => {
         });
 
     } catch (err) {
-        res.json({ success: false, error: 'Error al encontrar usuario ' + err.message });
+        return res.status(500).json({ message: err.message });
     }
 
 }
