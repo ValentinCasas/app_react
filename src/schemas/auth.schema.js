@@ -18,7 +18,10 @@ export const registerSchema = z.object({
         .min(6, {
             message: "Password must be at least 6 characters",
         }),
+    imageFile: z.any().optional(),
 });
+
+
 
 export const loginSchema = z.object({
     email: z.string().email(),

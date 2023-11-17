@@ -3,35 +3,59 @@ import bcrypt from "bcryptjs";
 import { createAccessToken } from './../libs/jwt.js';
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
+import { v1 as uuid } from 'uuid';
+import path from 'path';
+
 
 export const register = async (req, res) => {
-
     try {
         const { username, email, password } = req.body;
 
-        const userFound = await User.findAll({ where: { email } });
-        if (userFound[0]) return res.status(400).json(['the email is already in use'])
+        console.log(req.files.imageFile)
+
+        const userExists = await User.findOne({ where: { email } });
+        if (userExists) {
+            return res.status(400).json({ error: 'The email is already in use.' });
+        }
+
+        let imagePath = '';
+        let userImage;
+
+        if (!req.files || req.files.imageFile === null) {
+            imagePath = 'avatar_profile_default.png';
+        } else {
+            userImage = req.files.imageFile;
+            imagePath = uuid() + userImage.name;
+        }
 
         const passwordHash = await bcrypt.hash(password, 10);
 
-        const NewUser = await User.create({
-            username: username,
-            email: email,
-            password: passwordHash
+        const newUser = await User.create({
+            username,
+            email,
+            password: passwordHash,
+            imageUrl: imagePath,
         });
+
+        if (userImage) {
+
+            
+            await userImage.mv('../public/images/image_profile' + imagePath);
+
+        }
 
         const token = await createAccessToken({
-            id: NewUser.id
+            id: newUser.id,
         });
 
-        res.cookie('token', token)
-        res.json({ User: NewUser })
-
+        res.cookie('token', token);
+        res.json({ user: newUser });
     } catch (err) {
-        res.json({ success: false, error: 'Error al registrar usuario ' + err });
+        console.error('Error al registrar usuario:', err);
+        res.status(500).json({ success: false, error: 'Error al registrar usuario.' });
     }
+};
 
-}
 
 export const login = async (req, res) => {
     try {

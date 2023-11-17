@@ -4,6 +4,12 @@ import express from 'express'
 import morgan from 'morgan'
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import fileUpload from 'express-fileupload';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 import authRoutes from './routes/auth.routes.js';
 import taskRoutes from "./routes/tasks.routes.js";
@@ -15,11 +21,31 @@ app.use(cors({
     credentials: true
 }));
 app.use(morgan('dev'));
+
+
+
+app.use(express.static(path.join(__dirname, 'public/images/image_profile')));
+
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(fileUpload());
 app.use(cookieParser());
 
 
 app.use('/api', authRoutes)
 app.use('/api', taskRoutes)
+
+app.use((req, res, next) => {
+    res.status(404).json({ message: 'Not Found' });
+});
+
+
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+});
+
+
 
 export default app;

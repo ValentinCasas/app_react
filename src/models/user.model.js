@@ -20,7 +20,11 @@ const User = connectionBD.define(
     password: {
       type: DataTypes.STRING,
     },
+    imageUrl: {
+      type: DataTypes.STRING,
+    },
   },
+
   {
     tableName: "User",
     timestamps: false,

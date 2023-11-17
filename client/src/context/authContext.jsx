@@ -22,9 +22,21 @@ export const AuthProvider = ({ children }) => {
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const signup = async (user) => {
+    const signup = async (user, file) => {
         try {
-            const res = await registerRequest(user);
+
+            console.log('User Data:', user);
+            console.log('File:', file);
+
+            const formData = new FormData();
+
+            formData.append('username', user.username);
+            formData.append('email', user.email);
+            formData.append('password', user.password);
+            formData.append('imageFile', file);
+
+            const res = await registerRequest(formData);
+
             if (res.status === 200) {
                 setUser(res.data.User);
                 setIsAuthenticated(true);
@@ -34,6 +46,7 @@ export const AuthProvider = ({ children }) => {
             setErrors([error.response.data.message]);
         }
     };
+
 
 
     const signin = async (user) => {

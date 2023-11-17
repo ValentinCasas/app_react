@@ -41,10 +41,10 @@ function NavBar() {
         <header className="bg-white">
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <Link to="/tasks" className="-m-1.5 p-1.5">
                         <span className="sr-only">Your Company</span>
                         <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
-                    </a>
+                    </Link>
                 </div>
                 <div className="flex lg:hidden">
                     <button
@@ -58,7 +58,7 @@ function NavBar() {
                 </div>
                 <Popover.Group className="hidden lg:flex lg:gap-x-12">
                     <Popover className="relative">
-                        <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+                        <Popover.Button className="flex items-center gap-x-1 text-lg font-semibold leading-6 text-gray-900">
                             Product
                             <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
                         </Popover.Button>
@@ -112,39 +112,39 @@ function NavBar() {
                     {isAuthenticated ? (
                         <>
                             {user && user.username ? (
-                                <a className="text-sm font-semibold leading-6 text-gray-900">
+                                <a className="text-lg font-semibold leading-6 text-gray-900">
                                     Welcome {user.username}
                                 </a>
                             ) : (
-                                <a className="text-sm font-semibold leading-6 text-gray-900">
+                                <a className="text-lg font-semibold leading-6 text-gray-900">
                                     Wlecome
                                 </a>
                             )}
 
-                            <Link to="/add-tasks" className="text-sm font-semibold leading-6 text-gray-900">
+                            <Link to="/add-tasks" className="text-lg font-semibold leading-6 text-gray-900">
                                 Add task
                             </Link>
 
-                            <Link to="/add-tasks" onClick={() => logout()} className="text-sm font-semibold leading-6 text-gray-900">
+                            <Link to="/add-tasks" onClick={() => logout()} className="text-lg font-semibold leading-6 text-gray-900">
                                 Logout
                             </Link>
 
 
                         </>) : (
                         <>
-                            <Link to="/register" className="text-sm font-semibold leading-6 text-gray-900">
+                            <Link to="/register" className="text-lg font-semibold leading-6 text-gray-900">
                                 Register
                             </Link>
                         </>
                     )}
 
-                    <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+                    <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
                         otro
                     </a>
 
                 </Popover.Group>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
+                    <Link to="/login" className="text-lg font-semibold leading-6 text-gray-900">
                         Log in <span aria-hidden="true">&rarr;</span>
                     </Link>
                 </div>
