@@ -3,29 +3,30 @@ import bcrypt from "bcryptjs";
 import { createAccessToken } from './../libs/jwt.js';
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
+import { fileURLToPath } from 'url';
 import { v1 as uuid } from 'uuid';
 import path from 'path';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const register = async (req, res) => {
     try {
         const { username, email, password } = req.body;
-
-        console.log(req.files.imageFile)
 
         const userExists = await User.findOne({ where: { email } });
         if (userExists) {
             return res.status(400).json({ error: 'The email is already in use.' });
         }
 
-        let imagePath = '';
-        let userImage;
+        let imagePath = 'avatar_profile_default.png';
 
-        if (!req.files || req.files.imageFile === null) {
-            imagePath = 'avatar_profile_default.png';
-        } else {
-            userImage = req.files.imageFile;
-            imagePath = uuid() + userImage.name;
+        if (req.files && req.files.imageFile) {
+            const userImage = req.files.imageFile;
+            imagePath = uuid() + path.extname(userImage.name); // Añade una extensión única al nombre
+            const uploadPath = path.join(__dirname, '../public/images/image_profile', imagePath);
+
+            await userImage.mv(uploadPath);
         }
 
         const passwordHash = await bcrypt.hash(password, 10);
@@ -36,13 +37,6 @@ export const register = async (req, res) => {
             password: passwordHash,
             imageUrl: imagePath,
         });
-
-        if (userImage) {
-
-            
-            await userImage.mv('../public/images/image_profile' + imagePath);
-
-        }
 
         const token = await createAccessToken({
             id: newUser.id,
