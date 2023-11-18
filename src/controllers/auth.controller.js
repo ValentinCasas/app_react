@@ -23,8 +23,9 @@ export const register = async (req, res) => {
 
         if (req.files && req.files.imageFile) {
             const userImage = req.files.imageFile;
-            imagePath = uuid() + path.extname(userImage.name); // Añade una extensión única al nombre
-            const uploadPath = path.join(__dirname, '../public/images/image_profile', imagePath);
+            imagePath = uuid() + path.extname(userImage.name);
+            const uploadPath = path.join(__dirname, '../../client/public/images/image_profile', imagePath);
+
 
             await userImage.mv(uploadPath);
         }
@@ -38,12 +39,8 @@ export const register = async (req, res) => {
             imageUrl: imagePath,
         });
 
-        const token = await createAccessToken({
-            id: newUser.id,
-        });
-
-        res.cookie('token', token);
         res.json({ user: newUser });
+
     } catch (err) {
         console.error('Error al registrar usuario:', err);
         res.status(500).json({ success: false, error: 'Error al registrar usuario.' });

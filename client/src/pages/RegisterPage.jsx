@@ -11,19 +11,16 @@ function RegisterPage() {
         formState: { errors },
     } = useForm();
 
-    const { signup, isAuthenticated, errors: registerErrors } = useAuth();
+    const { signup, isAuthenticated, setIsAuthenticated , user, errors: registerErrors } = useAuth();
     const navigate = useNavigate();
 
     const onSubmit = async (values) => {
-        console.log('Form Values:', values);
-        console.log('Form Values fileeeee:', values.imageFile[0]);
         await signup(values, values.imageFile[0]);
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
     };
 
-
-    useEffect(() => {
-        if (isAuthenticated) navigate('/tasks');
-    }, [isAuthenticated, navigate]);
 
 
     const handleFileChange = (event) => {
@@ -36,65 +33,96 @@ function RegisterPage() {
 
 
     return (
-        <div className="flex h-[calc(100vh-100px)] items-center justify-center">
-            <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
-                {registerErrors.map((error, i) => (
-                    <div className="bg-red-500 p-2 text-white" key={i}>
-                        {error}
+
+
+        <>
+
+
+            <div id="auth__section" className="flex flex-col lg:flex-row h-[calc(100vh-100px)] p-3">
+
+                {/* Columna Izquierda */}
+                <div className="lg:w-1/2 md:w-full p-8 flex flex-col justify-center items-start mb-4 lg:mb-0">
+                    <h1 className="text-5xl font-bold text-blue-950 mb-4">REGISTRATE!</h1>
+                    <h2 className="text-2xl text-black w-full lg:w-1/2">
+                        Sé parte de este gran equipo reactivo :P
+                    </h2>
+                    <div className="flex mt-4">
+                        <button className="bg-blue-500 text-white px-4 py-2 mr-2">Botón 1</button>
+                        <button className="bg-slate-200 text-black px-4 py-2">Botón 2</button>
                     </div>
-                ))}
-                <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-                    <input
-                        type="text"
-                        {...register("username", { required: "Username is required" })}
-                        className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
-                        placeholder="Username"
-                    />
-                    {errors.username && <p className="text-red-500">{errors.username.message}</p>}
+                </div>
 
-                    <input
-                        type="email"
-                        {...register("email", {
-                            required: "Email is required",
-                            pattern: {
-                                value: /\S+@\S+\.\S+/,
-                                message: "Please enter a valid email address",
-                            },
-                        })}
-                        className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
-                        placeholder="Email"
-                    />
-                    {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+                {/* Columna Derecha */}
+                <div className="lg:w-1/2 md:w-full flex items-center justify-center p-10 ">
 
-                    <input
-                        type="password"
-                        {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })}
-                        className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
-                        placeholder="Password"
-                    />
-                    {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+                    {/* Formulario */}
+                    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="bg-white px-10 py-4 rounded-md shadow-lg">
 
-                    <input
-                        type="file"
-                        onChange={handleFileChange}
-                        onClick={() => console.log("File input clicked")}  // Agregamos esto para ver si se detecta el clic en el input
-                        {...register("imageFile")}
-                        className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
-                    />
+                        <h1 className="text-3xl font-bold text-black text-center mb-4">Register</h1>
+
+                        <input
+                            type="text"
+                            {...register("username", { required: "Username is required" })}
+                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            placeholder="Username"
+                        />
+                        {errors.username && <p className="text-red-500">{errors.username.message}</p>}
+
+                        <input
+                            type="email"
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /\S+@\S+\.\S+/,
+                                    message: "Please enter a valid email address",
+                                },
+                            })}
+                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            placeholder="Email"
+                        />
+                        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+
+                        <input
+                            type="password"
+                            {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })}
+                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            placeholder="Password"
+                        />
+                        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
+                            {...register("imageFile")}
+                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                        />
 
 
-                    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
-                        Register
-                    </button>
-                </form>
+                        <button
+                            type="submit"
+                            className="bg-blue-500 text-white px-6 py-3 mt-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+                        >
+                            Register
+                        </button>
 
-                <p className="flex gap-x-2 justify-between">
-                    <Link to="/login" className="text-sky-500">
-                        Sign in
-                    </Link>
-                </p>
+                        <div className="flex gap-x-2 justify-between mt-4">
+                            <Link to="/login" className="text-sky-500">
+                                Sign in
+                            </Link>
+                        </div>
+
+
+                    </form>
+                </div>
             </div>
-        </div>
+
+
+
+            <div id="auth__section-2" className="flex flex-col lg:flex-row h-[calc(100vh-100px)] p-3">
+            </div>
+
+
+        </>
     );
 }
 

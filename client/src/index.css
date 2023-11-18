@@ -6,3 +6,25 @@ body {
     background-color: #F8F8FF;
     color: white;
 }
+
+#auth__section {
+    background-image: url('/images/svg/login_section.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+#auth__section-2 {
+    background-image: url('/images/svg/login_section_2.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+
+/* tasks */
+
+#tasks__section__contain {
+    height: 70vh;
+    overflow-y: scroll;
+}

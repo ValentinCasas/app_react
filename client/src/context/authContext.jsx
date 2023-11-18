@@ -25,8 +25,6 @@ export const AuthProvider = ({ children }) => {
     const signup = async (user, file) => {
         try {
 
-            console.log('User Data:', user);
-            console.log('File:', file);
 
             const formData = new FormData();
 
@@ -39,10 +37,10 @@ export const AuthProvider = ({ children }) => {
 
             if (res.status === 200) {
                 setUser(res.data.User);
-                setIsAuthenticated(true);
+                setIsAuthenticated(false);
             }
         } catch (error) {
-            console.log(error.response.data);
+ 
             setErrors([error.response.data.message]);
         }
     };
@@ -53,13 +51,13 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await loginRequest(user);
 
-            console.log(res.data.User)
+ 
 
             setUser(res.data.User);
             setIsAuthenticated(true);
 
         } catch (error) {
-            console.log(error);
+ 
             setErrors([error.response.data.message]);
         }
     };
@@ -95,8 +93,8 @@ export const AuthProvider = ({ children }) => {
             try {
 
                 const res = await verifyTokenRequest(cookies.token);
-                console.log("Estas logueado prro, podes entrar acá - TOKEN: , " + cookies.token)
-                console.log(res.data);
+ 
+ 
 
                 if (!res.data) return setIsAuthenticated(false);
 

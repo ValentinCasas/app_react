@@ -122,23 +122,20 @@ function NavBar() {
                                 Add task
                             </Link>
 
-                            <Link to="/profile" className="text-lg font-semibold leading-6 text-gray-900">
-                                Profile
-                            </Link>
-
                             <Link to="/" onClick={() => logout()} className="text-lg font-semibold leading-6 text-gray-900">
                                 Logout
                             </Link>
 
 
-
-                            {user && user.username ? (
-                                <div class="h-[50px] shadow-md w-[50px] rounded-full border-4 overflow-hidden lg:justify-end -mt-4 border-white">
-                                    <img src={`http://localhost:3000/images/image_profile/${user.imageUrl}`} className="w-full h-full rounded-full object-center object-cover" />
-                                </div>
+                            {user && user.imageUrl ? (
+                                <Link to="/profile">
+                                    <div className="h-[50px] shadow-md w-[50px] rounded-full border-4 overflow-hidden lg:justify-end -mt-3 border-white">
+                                        <img src={`/images/image_profile/${user.imageUrl}`} className="w-full h-full rounded-full object-center object-cover" />
+                                    </div>
+                                </Link>
                             ) : (
-                                <div class="h-[50px] shadow-md w-[50px] rounded-full border-4 overflow-hidden -mt-4 border-white">
-                                    <img src={`http://localhost:3000/images/image_defect/avatar_profile_default.png`} className="w-full h-full rounded-full object-center object-cover" />
+                                <div className="h-[50px] shadow-md w-[50px] rounded-full border-4 overflow-hidden -mt-4 border-white">
+                                    <img src={`/images/image_defect/avatar_profile_default.png`} className="w-full h-full rounded-full object-center object-cover" />
                                 </div>
                             )}
 

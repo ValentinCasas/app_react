@@ -10,7 +10,7 @@ function ProfilePage() {
             <div className="h-[140px] bg-gradient-to-r from-cyan-500 to-blue-500"></div>
             <div className="px-5 py-2 flex flex-col gap-3 pb-6">
                 <div className="h-[90px] shadow-md w-[90px] rounded-full border-4 overflow-hidden -mt-14 border-white">
-                    <img src={`http://localhost:3000/images/image_profile/${user.imageUrl}`} className="w-full h-full rounded-full object-center object-cover" />
+                    <img src={`/images/image_profile/${user.imageUrl}`} className="w-full h-full rounded-full object-center object-cover" />
                 </div>
                 <div >
                     <h3 className="text-xl text-slate-900 relative font-bold leading-6"> {user.username}</h3>
