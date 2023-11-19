@@ -52,7 +52,7 @@ function LoginPage() {
                         <input
                             type="email"
                             {...register("email", { required: true })}
-                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className="w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Email"
                             name="email"
                         />
@@ -61,7 +61,7 @@ function LoginPage() {
                         <input
                             type="password"
                             {...register("password", { required: true })}
-                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className="w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Password"
                             name="password"
                         />

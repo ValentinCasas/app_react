@@ -7,7 +7,7 @@ function TaskCard({ task }) {
     const { deleteTask } = useTasks();
 
     return (
-        <div className="bg-gray-200  p-6 rounded-md max-w-md w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/2 overflow-hidden">
+        <div className="bg-gray-200  p-6 rounded-md max-w-md w-full sm:w-1/3 md:w-1/3 lg:w-1/2 xl:w-1/2 overflow-hidden">
             <h1 className="text-3xl font-semibold mb-4 text-blue-500 break-all">{task.title}</h1>
             <p className="text-gray-700 break-all">{task.description}</p>
 

@@ -3,7 +3,11 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 
+
+
+
 function RegisterPage() {
+
     const {
         register,
         handleSubmit,
@@ -11,7 +15,7 @@ function RegisterPage() {
         formState: { errors },
     } = useForm();
 
-    const { signup, isAuthenticated, setIsAuthenticated , user, errors: registerErrors } = useAuth();
+    const { signup, isAuthenticated, setIsAuthenticated, user, errors: registerErrors } = useAuth();
     const navigate = useNavigate();
 
     const onSubmit = async (values) => {
@@ -21,6 +25,9 @@ function RegisterPage() {
         }
     };
 
+    useEffect(() => {
+        if (isAuthenticated) navigate("/tasks")
+    }, [isAuthenticated])
 
 
     const handleFileChange = (event) => {
@@ -63,7 +70,7 @@ function RegisterPage() {
                         <input
                             type="text"
                             {...register("username", { required: "Username is required" })}
-                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className="w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Username"
                         />
                         {errors.username && <p className="text-red-500">{errors.username.message}</p>}
@@ -77,7 +84,7 @@ function RegisterPage() {
                                     message: "Please enter a valid email address",
                                 },
                             })}
-                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className="w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Email"
                         />
                         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
@@ -85,7 +92,7 @@ function RegisterPage() {
                         <input
                             type="password"
                             {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })}
-                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className="w-full bg-white borderbg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Password"
                         />
                         {errors.password && <p className="text-red-500">{errors.password.message}</p>}
@@ -94,9 +101,8 @@ function RegisterPage() {
                             type="file"
                             onChange={handleFileChange}
                             {...register("imageFile")}
-                            className="w-full bg-gray-200 text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className="w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                         />
-
 
                         <button
                             type="submit"

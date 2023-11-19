@@ -45,13 +45,28 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const createUser = async (rol, user, file) => {
+        try {
+            const formData = new FormData();
+
+            formData.append('username', user.username);
+            formData.append('email', user.email);
+            formData.append('password', user.password);
+            formData.append('imageFile', file);
+            formData.append('rol', rol);
+
+            const res = await registerRequest(formData);
+
+        } catch (error) {
+ 
+            setErrors([error.response.data.message]);
+        }
+    };
 
 
     const signin = async (user) => {
         try {
             const res = await loginRequest(user);
-
- 
 
             setUser(res.data.User);
             setIsAuthenticated(true);
@@ -93,13 +108,11 @@ export const AuthProvider = ({ children }) => {
             try {
 
                 const res = await verifyTokenRequest(cookies.token);
- 
- 
 
                 if (!res.data) return setIsAuthenticated(false);
 
                 setIsAuthenticated(true);
-                setUser(res.data);
+                setUser(res.data.UserFound);
                 setLoading(false);
 
             } catch (error) {
@@ -118,6 +131,7 @@ export const AuthProvider = ({ children }) => {
                 signup,
                 signin,
                 logout,
+                createUser,
                 loading,
                 isAuthenticated,
                 errors,

@@ -20,6 +20,9 @@ const User = connectionBD.define(
     password: {
       type: DataTypes.STRING,
     },
+    rol: {
+      type: DataTypes.INTEGER,
+    },
     imageUrl: {
       type: DataTypes.STRING,
     },

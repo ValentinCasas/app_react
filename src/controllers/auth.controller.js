@@ -10,11 +10,13 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+
 export const register = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password, rol } = req.body;
 
         const userExists = await User.findOne({ where: { email } });
+
         if (userExists) {
             return res.status(400).json({ error: 'The email is already in use.' });
         }
@@ -25,8 +27,6 @@ export const register = async (req, res) => {
             const userImage = req.files.imageFile;
             imagePath = uuid() + path.extname(userImage.name);
             const uploadPath = path.join(__dirname, '../../client/public/images/image_profile', imagePath);
-
-
             await userImage.mv(uploadPath);
         }
 
@@ -36,6 +36,7 @@ export const register = async (req, res) => {
             username,
             email,
             password: passwordHash,
+            rol: rol || 3,  
             imageUrl: imagePath,
         });
 
@@ -46,6 +47,7 @@ export const register = async (req, res) => {
         res.status(500).json({ success: false, error: 'Error al registrar usuario.' });
     }
 };
+
 
 
 export const login = async (req, res) => {
@@ -61,8 +63,10 @@ export const login = async (req, res) => {
         if (!isMatch) return res.status(400).json({ message: 'Incorrect password' });
 
         const token = await createAccessToken({ id: userFound[0].id });
+        const rol = userFound[0].rol;
 
         res.cookie("token", token)
+        res.cookie("rol", userFound[0].rol)
         res.json({
             success: true,
             User: userFound[0],
@@ -78,6 +82,7 @@ export const logout = (req, res) => {
     res.cookie('token', "", {
         expires: new Date(0),
     })
+    res.cookie('rol', "")
     return res.sendStatus(200);
 }
 
