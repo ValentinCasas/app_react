@@ -1,4 +1,17 @@
 @tailwind base;
+
+
+@layer base {
+    html {
+        @apply text-neutral-800;
+    }
+
+    html.dark {
+        @apply text-neutral-50;
+        @apply bg-neutral-800;
+    }
+}
+
 @tailwind components;
 @tailwind utilities;
 
@@ -9,6 +22,13 @@ body {
 
 #auth__section {
     background-image: url('/images/svg/login_section.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+#product__section {
+    background-image: url('/images/svg/product_section.svg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;

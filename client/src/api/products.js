@@ -9,3 +9,6 @@ export const createProductRequest = async (formData) => axios.post('/product/cre
     },
 })
 
+export const getProductsRequest = async () => axios.get("/product/products");
+
+export const deleteProductRequest = async (id) => axios.delete(`/product/delete/${id}`);

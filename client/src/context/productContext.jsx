@@ -1,7 +1,8 @@
-import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import {
     createProductRequest,
+    getProductsRequest,
+    deleteProductRequest,
 } from "../api/products";
 
 // productContext.jsx
@@ -29,28 +30,42 @@ export const ProductProvider = ({ children }) => {
 
             const res = await createProductRequest(formData);
 
-            if (res.status === 200) {
-                setProducts(res.data.Product);
+            if (res.status === 201) {
+                setProducts((prevProducts) => [...prevProducts, res.data.product]);
+
             }
         } catch (error) {
             setErrors([error.response.data.message]);
         }
     };
 
-    useEffect(() => {
-        if (errors.length > 0) {
-            const timer = setTimeout(() => {
-                setErrors([]);
-            }, 5000)
-            return () => clearTimeout(timer)
+    const getProducts = async () => {
+        try {
+            const res = await getProductsRequest();
+            if (res.status === 201) {
+                setProducts(res.data.Products);   
+            }
+        } catch (error) {
+            setErrors([error.response.data.message]);
         }
-    }, [errors])
+    };
+
+    const deleteProduct = async (id) => {
+        try {
+          const res = await deleteProductRequest(id);
+          if (res.status === 204) setProducts(products.filter((product) => product.id !== id));
+        } catch (error) {
+     
+        }
+      };
 
     return (
         <ProductContext.Provider
             value={{
                 products,
                 createProduct,
+                getProducts,
+                deleteProduct,
                 errors,
             }}
         >

@@ -4,7 +4,8 @@ import Cookies from "js-cookie";
 import {
     registerRequest,
     loginRequest,
-    verifyTokenRequest
+    verifyTokenRequest,
+    getUsersRequest,
 } from "../api/auth";
 
 const AuthContext = createContext();
@@ -18,6 +19,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
+    const [users, setUsers] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -56,6 +58,7 @@ export const AuthProvider = ({ children }) => {
             formData.append('rol', rol);
 
             const res = await registerRequest(formData);
+            setUsers((prevUsers) => [...prevUsers, res.data.user]);
 
         } catch (error) {
  
@@ -63,6 +66,16 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const getUsers = async () => {
+        try {
+            const res = await getUsersRequest();
+            if (res.status === 201) {
+                setUsers(res.data.Users);   
+            }
+        } catch (error) {
+            setErrors([error.response.data.message]);
+        }
+    };
 
     const signin = async (user) => {
         try {
@@ -128,7 +141,9 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 user,
+                users,
                 signup,
+                getUsers,
                 signin,
                 logout,
                 createUser,

@@ -36,7 +36,7 @@ export const register = async (req, res) => {
             username,
             email,
             password: passwordHash,
-            rol: rol || 3,  
+            rol: rol || 3,
             imageUrl: imagePath,
         });
 
@@ -116,4 +116,14 @@ export const verifyToken = async (req, res) => {
             UserFound: userFound
         });
     })
+}
+
+
+export const getUsers = async (req, res) => {
+    try {
+        const users = await User.findAll();
+        res.status(201).json({ Users: users });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }

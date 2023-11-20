@@ -12,3 +12,5 @@ export const registerRequest = async (formData) => axios.post('/auth/register', 
 export const loginRequest = async (user) => axios.post(`/auth/login`, user)
 
 export const verifyTokenRequest = async () => axios.get(`/auth/verify`)
+
+export const getUsersRequest = async () => axios.get(`/auth/get-users`)

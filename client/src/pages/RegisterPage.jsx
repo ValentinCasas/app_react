@@ -45,7 +45,7 @@ function RegisterPage() {
         <>
 
 
-            <div id="auth__section" className="flex flex-col lg:flex-row h-[calc(100vh-100px)] p-3">
+            <div id="auth__section" className="flex flex-col lg:flex-row min-h-screen p-3">
 
                 {/* Columna Izquierda */}
                 <div className="lg:w-1/2 md:w-full p-8 flex flex-col justify-center items-start mb-4 lg:mb-0">
@@ -124,7 +124,7 @@ function RegisterPage() {
 
 
 
-            <div id="auth__section-2" className="flex flex-col lg:flex-row h-[calc(100vh-100px)] p-3">
+            <div id="auth__section-2" className="flex flex-col lg:flex-row min-h-screen p-3">
             </div>
 
 

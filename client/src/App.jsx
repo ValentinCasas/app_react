@@ -14,7 +14,12 @@ import { TaskProvider } from "./context/TasksContext";
 import { ProductProvider } from './context/productContext';
 import NavBar from "./components/NavBar";
 
+
+
 function App() {
+
+
+
   return (
     <AuthProvider>
       <TaskProvider>
@@ -24,6 +29,7 @@ function App() {
 
             <main >
               <NavBar />
+
 
               <Routes>
                 <Route path='/' element={<HomePage />} />
@@ -45,8 +51,8 @@ function App() {
             </main>
 
           </BrowserRouter>
-          </ProductProvider>
-        </TaskProvider>
+        </ProductProvider>
+      </TaskProvider>
     </AuthProvider>)
 }
 
