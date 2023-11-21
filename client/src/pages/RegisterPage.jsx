@@ -60,10 +60,11 @@ function RegisterPage() {
                 </div>
 
                 {/* Columna Derecha */}
-                <div className="lg:w-1/2 md:w-full flex items-center justify-center p-10 ">
+                <div className="lg:w-1/2 md:w-full flex items-center justify-center p-5 ">
 
                     {/* Formulario */}
-                    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="bg-white px-10 py-4 rounded-md shadow-lg">
+                    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data"
+                        className="bg-white px-10 py-4 rounded-md shadow-lg">
 
                         <h1 className="text-3xl font-bold text-black text-center mb-4">Register</h1>
 
@@ -104,15 +105,17 @@ function RegisterPage() {
                             className="w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                         />
 
-                        <button
-                            type="submit"
-                            className="bg-blue-500 text-white px-6 py-3 mt-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-                        >
-                            Register
-                        </button>
 
-                        <div className="flex gap-x-2 justify-between mt-4">
-                            <Link to="/login" className="text-sky-500">
+                        <div className="flex gap-x-2 justify-between items-center mt-4">
+                            <button
+                                type="submit"
+                                className="bg-blue-500 text-white px-6 py-3 mt-6 rounded-md
+                                 hover:bg-blue-600 focus:outline-none 
+                                 focus:ring focus:border-blue-300"
+                            >
+                                Register
+                            </button>
+                            <Link to="/login" className="text-sky-500  mt-4">
                                 Sign in
                             </Link>
                         </div>

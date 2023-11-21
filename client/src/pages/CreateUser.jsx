@@ -5,6 +5,7 @@ import { Fragment, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import CardUser from "../components/CardUser";
 
 
 const roles = [
@@ -49,9 +50,8 @@ function CreateUser() {
     const onSubmit = async (values) => {
         const roleValue = selectedRole.rol;
         await createUser(roleValue, { ...values }, values.imageFile[0]);
-        
-    };
 
+    };
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -61,11 +61,12 @@ function CreateUser() {
 
     return (
         <>
-            <div id="auth__section" className="flex flex-col lg:flex-row min-h-[calc(100vh-100px)] p-3">
+            <section id="auth__section" className="flex flex-col lg:flex-row min-h-[calc(100vh-100px)] ">
 
                 {/* Columna izquierda */}
-                <div className="lg:w-1/2 md:w-full flex items-center justify-center p-10 ">
-                    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="bg-white px-10 py-4 rounded-md shadow-lg">
+                <div className="w-full  flex items-center justify-center lg:p-10 md:p-10 xs:p-1 ">
+                    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data"
+                        className="bg-white px-10 py-4 rounded-md shadow-lg">
                         <h1 className="text-3xl font-bold text-black text-center mb-4">User</h1>
 
                         <Listbox value={selectedRole} onChange={setSelectedRole}>
@@ -137,7 +138,7 @@ function CreateUser() {
                         <input
                             type="text"
                             {...register("username", { required: "Username is required" })}
-                            className="w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className="lg:w-1/3 mr-1 md:w-full xs:w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Username"
                         />
                         {errors.username && <p className="text-red-500">{errors.username.message}</p>}
@@ -151,7 +152,7 @@ function CreateUser() {
                                     message: "Please enter a valid email address",
                                 },
                             })}
-                            className="w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className="lg:w-3/6 md:w-full xs:w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Email"
                         />
                         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
@@ -183,44 +184,17 @@ function CreateUser() {
                     </form>
                 </div>
 
+            </section>
 
-                {/* cards */}
-                <div className="lg:w-1/2 md:w-full flex  items-center max-h-[calc(100vh-110px)] justify-center overflow-auto p-5">
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-2 w-full h-full flex-col-reverse">
-
-                        {users.map((user) => (
-
-                            <div
-                                key={user.id}
-                                className="bg-white p-4 lg:p-6 xs:p-2 rounded-md shadow-md md:w-full lg:w-full xl:w-full"
-                            >
-                                <div className="grid grid-cols-2 gap-4 items-end">
-                                    <img
-                                        src={
-                                            user.imageUrl === "avatar_profile_default.png"
-                                                ? `/images/image_defect/avatar_profile_default.png`
-                                                : `/images/image_profile/${user.imageUrl}`
-                                        }
-                                        alt={user.username}
-                                        className="w-32 h-32 object-cover rounded-md"
-                                    />
-
-                                    <div className="flex flex-col ">
-                                        <p className="text-xl font-bold text-black mb-2">{user.username}</p>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        ))}
-                    </div>
-                </div>
-
-
-
-            </div>
-
+            {/* Cards */}
+            <ul role="list" className="grid grid-cols-1 gap-6 px-4 pt-10 sm:grid-cols-2 lg:grid-cols-3">
+                {users.map((user) => (
+                    <CardUser
+                        key={user.id}
+                        user={user}
+                    />
+                ))}
+            </ul>
 
 
         </>

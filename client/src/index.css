@@ -18,21 +18,22 @@
 body {
     background-color: #F8F8FF;
     color: white;
+    overflow-x: hidden;
 }
 
-#auth__section {
+/* #auth__section {
     background-image: url('/images/svg/login_section.svg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-}
+} */
 
-#product__section {
+/* #product__section {
     background-image: url('/images/svg/product_section.svg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-}
+} */
 
 #auth__section-2 {
     background-image: url('/images/svg/login_section_2.svg');
@@ -45,6 +46,6 @@ body {
 /* tasks */
 
 #tasks__section__contain {
-    height: 70vh;
+    max-height: 80vh;
     overflow-y: scroll;
 }
