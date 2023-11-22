@@ -3,15 +3,29 @@ import { useForm } from "react-hook-form";
 import { useTasks } from "../context/TasksContext";
 import { useNavigate, useParams } from "react-router-dom";
 import FormDynamic from "../components/FormDynamic";
+import CategoryForm from "../components/CategoryForm";
+
 
 function TaskFormPage() {
-    const { register, handleSubmit, setValue } = useForm();
-    const { createTask, getTask, updateTask } = useTasks();
-    const navigate = useNavigate();
-    const params = useParams();
+    const { handleSubmit, setValue, register } = useForm();
+    const { createTask, getTask, categories, updateTask, getCategories } = useTasks();
+    const [showForm, setShowForm] = useState(false);
 
+    const openForm = () => {
+        setShowForm(true);
+    };
+
+    const closeForm = () => {
+        setShowForm(false);
+    };
+
+    const params = useParams();
     const formTitle = params.id ? "Edit task" : "Add task";
     const [formFields, setFormFields] = useState([]);
+
+    useEffect(() => {
+        getCategories();
+    }, []);
 
     useEffect(() => {
         async function loadTask() {
@@ -43,21 +57,32 @@ function TaskFormPage() {
         } else {
             await createTask(data);
         }
-        navigate("/tasks");
     });
 
     return (
-        <div className="bg-zinc-300 mx-auto
-                         flex justify-center
-                         max-w-7xl w-full p-10 
-                         rounded-md">
+        <>
+            {showForm && <CategoryForm onClose={closeForm} />}
+
             <FormDynamic
                 onSubmit={onSubmit}
-                register={register}
                 formFields={formFields}
                 formTitle={formTitle}
+                categories={categories}
+                register={register}
+                handleSubmit={handleSubmit}
+                setValue={setValue}
             />
-        </div>
+
+
+
+            <div className="w-full p-10">
+                <button onClick={openForm} className="w-full bg-blue-600 border 
+                text-white px-4 py-5 rounded-md my-2 
+                    focus:ring hover:bg-blue-700focus:border-blue-300">
+                    Add category
+                </button>
+            </div>
+        </>
     );
 }
 

@@ -5,6 +5,8 @@ import {
   getTasksRequest,
   getTaskRequest,
   updateTaskRequest,
+  createCategoryRequest,
+  getCategoriesRequest,
 } from "../api/tasks";
 
 const TaskContext = createContext();
@@ -18,6 +20,7 @@ export const useTasks = () => {
 export function TaskProvider({ children }) {
 
   const [tasks, setTasks] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getTask = async (id) => {
     try {
@@ -38,16 +41,33 @@ export function TaskProvider({ children }) {
       const res = await deleteTaskRequest(id);
       if (res.status === 204) setTasks(tasks.filter((task) => task.id !== id));
     } catch (error) {
- 
+
     }
   };
 
   const createTask = async (task) => {
     try {
       const res = await createTaskRequest(task);
- 
     } catch (error) {
- 
+      console.log(error.message)
+    }
+  };
+
+  const createCategory = async (category) => {
+    try {
+      const res = await createCategoryRequest(category);
+
+    } catch (error) {
+
+    }
+  };
+
+  const getCategories = async () => {
+    try {
+      const res = await getCategoriesRequest();
+      setCategories(res.data)
+    } catch (error) {
+
     }
   };
 
@@ -63,11 +83,14 @@ export function TaskProvider({ children }) {
     <TaskContext.Provider
       value={{
         tasks,
+        categories,
         getTask,
         getTasks,
         deleteTask,
         createTask,
         updateTask,
+        createCategory,
+        getCategories,
       }}
     >
       {children}

@@ -41,7 +41,7 @@ function NavBar() {
                     <div className="flex lg:flex-1">
                         <Link to="/tasks" className="-m-1.5 p-1.5">
                             <span className="sr-only">Your Company</span>
-                            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+                            <img className="w-12" src="/images/image_defect/logo.png" alt="" />
                         </Link>
                     </div>
                     <div className="flex lg:hidden">

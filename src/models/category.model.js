@@ -2,8 +2,8 @@ import { DataTypes } from "sequelize";
 import connectionBD from "../db.js";
 
 
-const Task = connectionBD.define(
-    "Task",
+const Category = connectionBD.define(
+    "Category",
     {
         id: {
             type: DataTypes.INTEGER,
@@ -11,26 +11,21 @@ const Task = connectionBD.define(
             autoIncrement: true,
             unique: true,
         },
-        title: {
+        name: {
             type: DataTypes.STRING,
         },
         description: {
             type: DataTypes.STRING,
         },
-        userId: {
-            type: DataTypes.INTEGER,
+        colour: {
+            type: DataTypes.STRING,
         },
-        categoryId: {
-            type: DataTypes.INTEGER
-        },
-        date: {
-            type: DataTypes.DATE,
-        },
+
     },
     {
-        tableName: "Task",
+        tableName: "Category",
         timestamps: false,
     }
 );
 
-export default Task;
+export default Category;

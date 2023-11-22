@@ -5,7 +5,7 @@ import { Fragment, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import CardUser from "../components/CardUser";
+import CardUser from "../components/cards/CardUser";
 
 
 const roles = [
@@ -61,13 +61,13 @@ function CreateUser() {
 
     return (
         <>
-            <section id="auth__section" className="flex flex-col lg:flex-row min-h-[calc(100vh-100px)] ">
+            <section id="auth__section" className="flex bg-white flex-col-2 min-h-[calc(100vh-200px)] ">
 
                 {/* Columna izquierda */}
-                <div className="w-full  flex items-center justify-center lg:p-10 md:p-10 xs:p-1 ">
+                <div className="lg:w-4/6 md:w-full bg-white flex items-center justify-center lg:p-3 md:p-4 xs:p-4 ">
                     <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data"
-                        className="bg-white px-10 py-4 rounded-md shadow-lg">
-                        <h1 className="text-3xl font-bold text-black text-center mb-4">User</h1>
+                        className="bg-white px-10 py-4 rounded-md shadow-2xl">
+                        <h1 className="text-3xl font-bold text-black text-center">User</h1>
 
                         <Listbox value={selectedRole} onChange={setSelectedRole}>
                             {({ open }) => (
@@ -138,7 +138,7 @@ function CreateUser() {
                         <input
                             type="text"
                             {...register("username", { required: "Username is required" })}
-                            className="lg:w-1/3 mr-1 md:w-full xs:w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className=" mr-1 md:w-full xs:w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Username"
                         />
                         {errors.username && <p className="text-red-500">{errors.username.message}</p>}
@@ -152,7 +152,7 @@ function CreateUser() {
                                     message: "Please enter a valid email address",
                                 },
                             })}
-                            className="lg:w-3/6 md:w-full xs:w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
+                            className="md:w-full xs:w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                             placeholder="Email"
                         />
                         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
@@ -172,22 +172,27 @@ function CreateUser() {
                             className="w-full bg-white border text-gray-800 px-4 py-5 rounded-md my-2 focus:outline-none focus:ring focus:border-blue-300"
                         />
 
-
-
-                        <button
-                            type="submit"
-                            className="bg-blue-500 text-white px-6 py-3 mt-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-                        >
-                            Create
-                        </button>
+                        <div className="w-full grid mb-4">
+                            <button
+                                type="submit"
+                                className=" bg-blue-500 text-white px-6 py-3 mt-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+                            >
+                                Create
+                            </button>
+                        </div>
 
                     </form>
                 </div>
 
+                <div className="flex bg-white justify-center items-center hidden lg:block lg:w-1/2 min-h-[calc(100vh-200px)] lg:py-20 ">
+                    <img src="/images/flat/puzzle.png" className="mx-auto my-auto" />
+                </div>
+
             </section>
 
-            {/* Cards */}
-            <ul role="list" className="grid grid-cols-1 gap-6 px-4 pt-10 sm:grid-cols-2 lg:grid-cols-3">
+            <hr className="mt-8 mx-10 border-t border-gray-300" />
+
+            <ul role="list" className="grid  grid-cols-1 gap-10 px-4 pt-10 pb-10 sm:grid-cols-2 lg:grid-cols-3">
                 {users.map((user) => (
                     <CardUser
                         key={user.id}
